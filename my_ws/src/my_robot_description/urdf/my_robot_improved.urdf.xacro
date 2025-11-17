@@ -1,0 +1,135 @@
+<?xml version= "1.0"?>
+
+<robot name="my_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <!--by adding above url we can add direct variable-->
+    <!--Ex.  ${pi/2} instead of 1.57-->
+
+    <!--creating own constant variable or properties-->
+    <xacro:property name="base_length"  value="0.6" />
+    <xacro:property name="base_width" value="0.4" />
+    <xacro:property name="base_height" value="0.2" />
+     <xacro:property name="wheel_radius" value="0.1" />
+    <xacro:property name="wheel_length" value="0.05" />
+
+    <!--add colour-->
+    <material name ="grey">
+        <color rgba="0.7 0.7 0.7 1" />
+    </material>
+
+    <material name ="green">
+        <color rgba="0 0.6 0 1" />
+    </material>
+
+    <material name="white">
+        <color rgba="1 1 1 1" />
+    </material>
+    
+    <link name="base_footprint" />
+
+    <link name ="base_link">
+        <visual>
+            <geometry>
+                <box size="${base_length} ${base_width} ${base_height}" />  <!-- creating box & all values are in meter-->
+            </geometry>
+            <origin xyz="0 0 ${base_height/2.0}" rpy="0 0 0" /> <!--origin of the box-->
+            <material name="grey" />
+        </visual>
+    </link>
+    <!--another link-->
+    <link name="lidar_link">
+        <visual>
+            <geometry> 
+                <cylinder radius="0.1" length="0.05" />
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <material name="green" />
+        </visual>
+    </link>
+
+    <!--another addotional link  revolute-->
+    <link name="revolute_link">
+        <visual>
+            <geometry>
+                <box size="0.1 0.1 0.1" />
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <material name="grey" />
+        </visual>
+    </link>
+
+    <!--functions in urdf <== xacro:macro-->
+    <xacro:macro name="wheel_link" params="prefix">
+        <link name="${prefix}_wheel">
+            <visual>
+                <geometry>
+                    <cylinder radius="${wheel_radius}" length="${wheel_length}" />
+                </geometry>
+                <origin xyz="0 0 0" rpy="${pi / 2.0} 0 0" />   <!--we want to move wheel 90 deg(1.57 rad) across x-axis-->
+                <material name="white" />
+            </visual>
+        </link>
+    </xacro:macro>
+    
+    <!--calling the function <== xacro:macro-->
+    <xacro:wheel_link prefix="left" />
+    <xacro:wheel_link prefix="right" />
+
+    
+
+    <link name="castor_wheel">
+        <visual>
+            <geometry>
+                <sphere radius="${wheel_radius/2.0}" />
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            
+        </visual>
+    </link>
+
+    <!--link relationship ==> joint-->
+    <joint name ="base_joint" type="fixed">
+        <parent link="base_footprint" />
+        <child link="base_link" />
+        <origin xyz="0 0 ${wheel_radius}" rpy="0 0 0" />
+    </joint>
+
+    <joint name="base_lidar_joint" type="fixed">
+        <parent link="base_link" />
+        <child link="lidar_link" />
+        <origin xyz="0 0 0.225" rpy="0 0 0" />
+    </joint>
+
+    <joint name="base_left_wheel_joint" type="continuous">
+        <parent link="base_link" />
+        <child link="left_wheel" />
+        <origin xyz="${-base_length / 4.0} ${base_width/2 + wheel_length/2} 0" rpy="0 0 0" />
+        <axis xyz="0 1 0" />  <!--rotation around y axis-->
+    </joint>
+
+    <joint name="base_right_wheel_joint" type="continuous">
+        <parent link="base_link" />
+        <child link="right_wheel" />  
+        <origin xyz="${-base_length / 4.0} ${-(base_width/2 + wheel_length/2)} 0" rpy="0 0 0" />
+        <axis xyz="0 1 0" />
+    </joint>
+
+    
+    <joint name="base_castor_wheel_joint" type="fixed">
+        <parent link="base_link" />
+        <child link="castor_wheel" />
+        <origin xyz="${base_length / 3.0} 0 ${-wheel_radius/2.0}" rpy="0 0 0" />
+        <axis xyz="0 0 0" />
+    </joint>
+
+    <joint name="lidar_revolute_joint" type="revolute">
+        <parent link="lidar_link" />
+        <child link="revolute_link" />
+        <origin xyz="0 0 0.075" rpy="0 0 0" />
+        <axis xyz="0 0 1" />
+        <!--limit is must for revolute joint-->
+        <!--limit is -90 to +90 in radian-->
+        <limit lower="-1.57" upper="1.57" velocity="100" effort="100" />
+    </joint>
+  
+</robot> 
+ 

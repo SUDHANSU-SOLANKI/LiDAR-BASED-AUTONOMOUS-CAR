@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+   <!--THIS XACRO FILE CONTAINS COMMON PROPERTIES-->
+
+   <!--add colour-->
+    <material name ="grey">
+        <color rgba="0.7 0.7 0.7 1" />
+    </material>
+
+    <material name ="green">
+        <color rgba="0 0.6 0 1" />
+    </material>
+
+    <material name="white">
+        <color rgba="1 1 1 1" />
+    </material>
+
+    <material name="blue">
+        <color rgba="0 0 0.5 1" />
+    </material>
+
+    <material name="yellow">
+        <color rgba="1 1 0 1" />
+    </material>
+
+    <material name="orange">
+        <color rgba="1 0.5 0.0 1" />
+    </material>
+
+    <!--for MOI of perticular shape == serach list of moment of inertia(wiki)-->
+
+    <!--macro for box inertia which is same for all boxes-->
+    <xacro:macro name="box_inertia" params="m x y z o_xyz o_rpy">
+        <inertial>
+            <mass value="${m}" />
+            <origin xyz="${o_xyz}" rpy="${o_rpy}" />
+            <!--formula for MOI == x = (mass/12)*(y*y + z*z)-->
+            <inertia ixx="${(m/12) * (y*y + z*z)}" ixy="0.0" ixz="0.0"
+                     iyy="${(m/12) * (x*x + z*z)}" iyz="0.0"
+                     izz="${(m/12) * (x*x + y*y)}" />
+        </inertial>
+    </xacro:macro>
+
+    <!--macro for cylinder-->
+    <xacro:macro name="cylinder_inertia" params="m r h o_xyz o_rpy">
+        <inertial>
+            <mass value="${m}" />
+            <origin xyz="${o_xyz}" rpy="${o_rpy}" />
+            <inertia ixx="${(m/12) * (3*r*r + h*h)}" ixy="0" ixz="0"
+                     iyy="${(m/12) * (3*r*r + h*h)}" iyz="0"
+                     izz="${(m*r*r)/2}" />
+        </inertial>
+    </xacro:macro>
+
+    <!--macro for sphere-->
+    <xacro:macro name="sphere_inertia" params="m r o_xyz o_rpy">
+        <inertial>
+            <mass value="${m}" />
+            <origin xyz="${o_xyz}" rpy="${o_rpy}" />
+            <inertia ixx="${(2*m*r*r)/5}" ixy="0" ixz="0"
+                     iyy="${(2*m*r*r)/5}" iyz="0"
+                     izz="${(2*m*r*r)/5}" />
+        </inertial>
+    </xacro:macro>
+
+</robot>

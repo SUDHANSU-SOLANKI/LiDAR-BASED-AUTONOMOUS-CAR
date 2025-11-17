@@ -1,0 +1,31 @@
+
+SLAM: ==> slam_toolbox
+- ADD base_footprint LINK IN URDF
+- INSTALL SLAM_TOOLBOX BY : sudo apt install ros-humble-slam-toolbox
+--> MODE : online and asynchronous
+    - online : WORKING ON A LIVE DATA STREAM RATHER THAN RECORDED LOGS
+    - asynchronous : ALWAYS PROCESS THE MOST RECENT SCAN TO AVOID LAGGING, EVEN IF THAT MEANS SKIPPING SCANS
+    - THIS FILES ALREADY COMES WITH BUILD IN LAUNCH FILES AND OTHER FILES
+- COPY ONLINE_ASYNC FILE TO OUR WORKSPACE BY : cp /opt/ros/humble/share/slam_toolbox/config/mapper_params_online_async.yaml ~/Desktop/ros2_intermediate_cource/my_ws/src/my_robot_bringup/config
+- THEN RUN OUR LAUNCH FILE THEN TO CREATE MAP IN RVIZ RUN LAUNCH FILE FROM SLAM_TOOLBOX : ros2 launch slam_toolbox online_async_launch.py params_file:=./src/my_robot_bringup/config/mapper_params_online_async.yaml use_sim_time:=true
+ |--> BY THIS /map TOPIC WILL APPEAR IN RVIZ
+- THEN WE CAN CREATE A MAP OF ENVIRONMENT AROUND OUR CAR
+- TO SAVE MAP OPEN slam_toolbox FROM panels IN RVIZ THEN PROVIDE SAVE MAP NAME & SERIALIZE MAP NAME (CAN GIVE SAME NAME TO BOTH)
+- AND TO USE THE SAVED MAP WE HAVE TO TWICK SOME PARAMETERS IN mapper_params_online_async.yaml FILE LIKE MAP_PATH map_start_at_dock : true
+
+
+
+
+
+NVIGATION:
+- INSTALL nav2 stack : sudo apt install ros-humble-navigation2 ros-humble-nav2-bringup
+-PREP work --> OUR DEVICE EXPECT DATA AT /diff_cont/cmd_vel_unstamped BUT nav2 PUBLISH IT TO /cmd_vel
+  |--> NEW TOPIC NAME twist_mux WHICH TAKES MULIPLE TWIST MSGS AND MULPLEX THEM WHICH ALLOW US TO PRIROTISE AND ETC..  
+     |--> EX. /cmd_vel(or cmd_vel_joy)(FROM TELEOP_NODE) & /cmd_vel(FROM nav2)  --> TO twist_mux
+- CREATE NEW FILE NAMED twist_mux.yaml IN CONFIG FOLDER AND PROVIDE DIFFERENT TOPICS AND PRIORITY
+
+- THEN RUN THIS CMD TO START NAV :  ros2 launch nav2_bringup navigation_launch.py use_sim_time:=true
+
+- BY THIS NOW WE VAN GIVE GOAL BT 2D goal pose TO START NAVIGATION
+
+- BUT IT WILL DO ALL BY ITSELF BUT FOR SIME REASON WE WANT TO TAKEOVER AND CONTROL IT THEN IT WILL NOT WORK FOR THAT WE HAVE TO ADD A TOPIC IN OUR twist_mux.yaml FILE 

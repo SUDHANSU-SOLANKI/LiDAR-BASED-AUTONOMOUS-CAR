@@ -1,0 +1,14 @@
+<?xml version= "1.0"?>
+<robot name="my_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <!--by adding above url we can add direct variable-->
+    <!--Ex.  ${pi/2} instead of 1.57-->
+
+    <!--THIS IS MAIN FILE WHICH CONTAIN TWO XACRO FILE-->
+    <!--TO SHORTEN THE CODE WE INCLUDE FILE IN THIS MAIN FILE-->
+
+
+    <xacro:include filename="common_properties.xacro" />
+    <xacro:include filename="arm.xacro" />
+    <xacro:include filename="arm_gazebo.xacro" />
+
+</robot> 

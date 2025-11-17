@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!--since the castor wheel will be rotating in real life -->
+    <!--But here it is fixed because we do not have to control it-->
+    <!--Thus we have to reduce its friction value--> 
+    <gazebo reference="castor_wheel">  <!--name should be same as main urdf file-->
+        <mu1 value="0.1" />
+        <mu2 value="0.1" /> 
+    </gazebo>
+
+     <!--This is diffrencial drive plugin-->
+     <!--By this plugin we can control the wheels-->
+    <gazebo>
+        <plugin
+            filename="gz-sim-diff-drive-system"     
+            name="gz::sim::systems::DiffDrive" >
+
+            <!--Below plugins parameters are taken from .hh file from THE github repositary-->
+
+            <!--giving our our left and right wheel joint to gazebo plugins-->
+            <!--here left_joint and right_joint are plugins from THE repositary-->
+            <left_joint>base_left_wheel_joint</left_joint>
+            <right_joint>base_right_wheel_joint</right_joint>
+            <!--distance between two wheels centre == [base(0.4) + 2 *(wheel_length/2)]-->
+            <wheel_separation>0.45</wheel_separation>
+            <wheel_radius>0.1</wheel_radius>   <!--radius of the wheel-->
+            <!--odom is our reference frame-->
+            <!--simply it is relation between where the robot is and where it was-->
+            <frame_id>odom</frame_id>
+            <child_frame_id>base_footprint</child_frame_id>
+        </plugin>
+    </gazebo>
+
+    <!--But we need something to publish on joint_state_publisher to control the robot-->
+    <!--To simulate the robot-->
+    <!--This plugin will be common in most of the robots-->
+    <gazebo>
+    <!--Same as above this plugin has .hh and .cc files-->
+        <plugin  
+            filename="gz-sim-joint-state-publisher-system"
+            name="gz::sim::systems::JointStatePublisher">
+            <!--Joints which we want to control == left and right wheel-->
+            <joint_name>base_left_wheel_joint</joint_name>
+            <joint_name>base_right_wheel_joint</joint_name>
+        </plugin>
+    </gazebo>
+
+</robot>

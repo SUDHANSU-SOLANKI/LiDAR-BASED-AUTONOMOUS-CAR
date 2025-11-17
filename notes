@@ -1,0 +1,127 @@
+
+/opt/ros/humble/share/ : inbuild files in ros2 humble
+
+**********
+add all folder in pkg to cmakelist.txt
+***xml launch file does not really work with ros2 ==> use python launch files ***
+without xacro --> urdf file ==> ref. --> my_ws/src/my_robot_description/urdf/my_robot.urdf
+
+MAKING IMPROVED URDF WITH XACRO:( .xacro OR .urdf.xacro )
+XACRO PROPERTIES:
+-xacro properties is like variable we can give it a name and value 7 then we can use it anywhere in the code BY ${name}
+-by using propeties we can provide precise value
+
+- macro : it is like a function ==> reusable code with some parameters --> <xacro:macro >   </xacro:macro>  ==> only use when code is repeaing more than twice
+|--> ref. --> my_ws/src/my_robot_description/urdf/my_robot_improved.urdf.xacro   (all in one file)
+
+- when code gets too long we can split it into multiple files 
+  then add it to each other
+ |--> ref. --> my_ws/src/my_robot_description/urdf/my_robot_main.urdf.xacro
+      |--> which contains two xacro files --> common_properties.xacro AND mobile_base.xacro
+**********
+
+
+**********
+GAZEBO:(it is a simulation tool with gravity and friction)f==> run --> gazebo
+RVIZ is for visualizarion and debug BUT not for simulation
+- gz_sim : TO START GAZEBO
+- ros2 launch ros_gz_sim gz_sim.launch.py gz_args:=empty.sdf : TO START GAZEBO WITH LAUNCH FILE AND ARGUMENTS (EMPTY WORLD)
+
+inertial and collision are must to simulate in gazebo
+
+- inertial part : to simulate robot in gazebo --> gravity
+ |--> ref ==> common_properties.xacro
+ 
+- collision tag : we need to add this to every links before simulating it in gazebo
+  - by this robot can easily avoid obstacle without any collision or fall
+    |--> ref ==> common_properties.xacro
+    
+SPAWN THE ROBOT IN GAZEBO :
+==> WITHOUT USING LAUNCH FILE USING TERMINAL
+    - IN FIRST TERMINAL PUBLISH robot_state_publisher BY : ros2 run robot_state_publisher robot_state_publisher --ros-args -p robot_description:="$(xacro my_robot_main.urdf.xacro)" (it has to be in .../urdf/  <-- to run this command)
+    OR ros2 run robot_state_publisher robot_state_publisher --ros-args -p robot_description:="$(xacro /home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/src/my_robot_description/urdf/my_robot_main.urdf.xacro)"
+    - IN SECOND TERMINAL OPEN GAZEBO BY : ros2 launch ros_gz_sim gz_sim.launch.py gz_args:="empty.sdf -r" (BY -r IT WILL START TIMER WITH OPENING GAZEBO)
+    - IN 3RD TERMINAL TO SPAWN THE ROBOT IN GAZEBO BY : ros2 run ros_gz_sim create -topic robot_description
+    - THEN IN 4TH TERMINAL OPEN RVIZ WITH URDF BY : ros2 run rviz2 rviz2 -d ~/Desktop/ros2_intermediate_cource/my_ws/src/my_robot_description/rviz/urdf_config.rviz
+
+==> WITH USING LAUNCH FILE (ALL IN ONE):
+    Instructions:
+	- Create a new package "my_robot_bringup"
+	- Create and install a "launch" folder
+	- Add a new launch file "my_robot_gazebo.launch.xml"
+	- In the launch file, start:
+	    - Robot state publisher node
+	    - Gazebo launch file (using <include file="" /> tag and <arg name="" value="" />)
+	    - create node
+	    - Rviz2 with config
+LAUNCH FILE --> ref. --> my_ws/src/my_robot_bringup/launch/my_robot_gazebo.launch.xml
+  -MAKE SURE TO ADD ALL DEPENDENCIES TO package.xml
+  - THIS WILL THROW AN ERROR ON RVIZ(ONLY ONE WHEEL AT CENTRE) <<-- THIS WILL BE SOLVED BY GAZEBO PLUGINS(SYSTEMS)
+**********
+    
+**********
+GAZEBO PLUGINS AND JOINT STATE TO CONTROL ROBOT IN GAZEBO:
+DIFF. PLUGINS(SYSTEMS) IN GITHUB : gazebosim/gz-sim/src/systems/
+  .cc --> implementation file
+  .hh --> header file
+- we have to add gazebo tag in our urdf file
+- In plugin we have to add filename which is seperated by '-' AND name which is from .cc(last line) file from GITHUB
+  |--> filename=""  format ==> gz-sim-<filename saperated by '-'>-system
+- .hh file has info about plugins in comments 
+- ref .  ==> mobile_base_gazebo.xacro  (IN THIS FILE WE ADD WHAT WE WANT TO CONTROL IN GAZEBO)
+
+|==> Gazebo Bridge:
+  - To make connection between Gazebo and Ros
+  - To see topics publish by Gazebo ==> ign topic -l
+  - Create bridge for each topic 
+  --> Basic structure of bridge in yaml
+      - we have to provide ros_topic and gz_topic && ros_type and gz_type && derection == either gazebo to Ros or Ros to gazebo
+      - And we have to provide these for each topic
+      - ign topic -e -t /your/topic/name ==> for topic info and type
+        |--> another way to get type of topics ==> GITHUB : ros_gz/ros_gz_bridge/
+            ex.      rosgraph_msgs/msg/Clock	gz.msgs.Clock
+      - odometry topic is used for navigation
+   ROS_TO_GZ ==> cmd_vel --> we are sending control values from ros to gazebo
+   GZ_TO_ROS ==> plugins to ros ==> rviz
+   
+   URDF ==> movements and geometry of robot
+   INERTIAL AND COLLISION ==> falling and unbalancingf
+   PLUGINS & BRIDGE==> controls of robot
+   
+-> teleop control BY ==> ros2 run teleop_twist_keyboard teleop_twist_keyboard 
+
+|==> TO ADD REAL LIFE SHAPE IN GAZEBO
+   - search at top right --> resource spawner
+    |-> it will open a window at bottom left where we can see so many objects in openrobotics
+    -> search for specific objects
+    OR better ==> go to --> http://app.gazebosim.org/fuel/models
+    
+  --> To save the created world in gazebo first remove our robot then save it
+  create a new folder in our workspace for worlds and install it --> .sdf file for gz
+  ==> To open robot with gz world ==> in launch file write name of world instead of empty.sdf
+      |--> add path just like urdf and rviz path by $(find-pkg-share  ...)
+**********
+
+**********
+ADDING A SENSOR IN GAZEBO (research on our own about gz-sensors)
+|==> different documentation for different sensors --> GITHUB --> gazebosim/gz-sensors/include/gz/sensors/....   ==> diff .hh and .cc files
+
+-- First create a relataed shape in urdf with collision and inertial tags
+-- add gazebo plugins to control
+==> adding sensor to gazebo 
+    - open worlds .sdf file and add this code after list of plugins(line 12)
+      <plugin name='gz::sim::systems::Sensors' filename='gz-sim-sensors-system' >
+      	  <render_engine>ogre2</render_engine>
+      </plugin>
+    - Then add plugin in camera.xacro file
+    - add bridge in yaml file
+    
+|==> final projects ==> robotic arm
+  resource file for more info about specs from the cource 
+  - urdf
+  - collision and inertial
+  - plugins in arm_gazebo.xacro file
+  - briges of topics in .yaml file
+  then control joints in gazebo by --> ros2 topic pub -1 /joint1/cmd_pos std_msgs/msg/Float64 "{data : 0.5}"
+
+  

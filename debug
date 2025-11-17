@@ -1,0 +1,22 @@
+
+
+PROBLEM : EVERYTHING WAS WORKING PERFECTLY --> LIDAR DATA WAS BEING PUBLISHED AT /scan BUT NOTHING IS SEEN IN RVIZ LASERSCAN
+THE PROBLEM WAS THAT /scan IS PUBLISHING TO my_robot/base_footprint/lidar_link BUT THERE WASN'T ANY FRAME NAMED THAT IT WAS JUST lidar_link
+TO SEE FRAME ID : ros2 topic echo /scan --once | grep frame_id
+  frame_id: my_robot/base_footprint/lidar_link
+
+    SOLUTION : WE JUST HAVE TO CREATE static_transform_publisher FROM lidar_link TO my_robot/base_footprint/lidar_link
+              --> RUN IN ANOTHER TERMINAL 
+                  ros2 run tf2_ros static_transform_publisher 0 0 0 0 0 0 \
+    lidar_link my_robot/base_footprint/lidar_link
+FORMET OF ABOVE COMMAND : x y z roll pitch yaw frame_id child_frame_id
+
+ADD THIS IN LAUNCH FILE SO DO NOT HAVE TO RUN IT ALL THE TIME
+BY RUNNING THIS MY PROBLEM WAS CLEARED
+
+
+
+
+PROBLEM: RVIZ WAS NOT SHOWING WHEELS IN ROBOT_MODEL
+
+SOLUTION : ADD NODE OF robot_state_publisher along WITH joint_state_publisher_gui IN LAUNCH FILE

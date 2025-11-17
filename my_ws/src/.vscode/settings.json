@@ -1,0 +1,17 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/sudhansu/Desktop/ROS2/ros2_workspace/install/urdf_rviz_r2d2/lib/python3.10/site-packages",
+        "/home/sudhansu/Desktop/ROS2/ros2_workspace/install/py_srvcli/lib/python3.10/site-packages",
+        "/home/sudhansu/Desktop/ROS2/ros2_workspace/install/my_robot_controller/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/sudhansu/Desktop/ROS2/ros2_workspace/install/urdf_rviz_r2d2/lib/python3.10/site-packages",
+        "/home/sudhansu/Desktop/ROS2/ros2_workspace/install/py_srvcli/lib/python3.10/site-packages",
+        "/home/sudhansu/Desktop/ROS2/ros2_workspace/install/my_robot_controller/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "cmake.sourceDirectory": "/home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/src/my_robot_description"
+}

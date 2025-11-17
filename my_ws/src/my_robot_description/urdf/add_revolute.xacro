@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+    <!--another link-->
+    <link name="lidar_link">
+        <visual>
+            <geometry> 
+                <cylinder radius="0.1" length="0.05" />
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <material name="green" />
+        </visual>
+    </link>
+    <!--another addotional link  revolute-->
+    <link name="revolute_link">
+        <visual>
+            <geometry>
+                <box size="0.1 0.1 0.1" />
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <material name="grey" />
+        </visual>
+    </link>
+
+    <joint name="lidar_revolute_joint" type="revolute">
+        <parent link="lidar_link" />
+        <child link="revolute_link" />
+        <origin xyz="0 0 0.075" rpy="0 0 0" />
+        <axis xyz="0 0 1" />
+        <!--limit is must for revolute joint-->
+        <!--limit is -90 to +90 in radian-->
+        <limit lower="${-pi / 2.0}" upper="${pi / 2.0}" velocity="100" effort="100" />
+    </joint>
+
+</robot>
