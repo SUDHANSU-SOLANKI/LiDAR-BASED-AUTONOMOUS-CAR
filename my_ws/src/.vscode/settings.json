@@ -13,5 +13,7 @@
         "/opt/ros/humble/lib/python3.10/site-packages",
         "/opt/ros/humble/local/lib/python3.10/dist-packages"
     ],
-    "cmake.sourceDirectory": "/home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/src/my_robot_description"
+    "cmake.sourceDirectory": "/home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/src/my_robot_description",
+    "ROS2.distro": "humble",
+    "C_Cpp.errorSquiggles": "disabled"
 }

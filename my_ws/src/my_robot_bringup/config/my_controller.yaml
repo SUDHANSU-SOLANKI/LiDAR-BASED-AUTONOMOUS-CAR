@@ -1,0 +1,35 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 50  # Hz
+
+    # The broadcasters and controllers to be loaded
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    diff_drive_controller:
+      type: diff_drive_controller/DiffDriveController
+
+diff_drive_controller:
+  ros__parameters:
+    left_wheel_names: ["base_left_wheel_joint"]
+    right_wheel_names: ["base_right_wheel_joint"]
+
+    use_stamped_vel: false  ## So it does not expect timestamped velocity commands
+    ## Topic type from geometry_msgs/msg/TwistStamped to geometry_msgs/msg/Twist
+
+    # Time in seconds to keep moving if no new command is received
+    cmd_vel_timeout: 0.5  # Increase this to 1.0 or 2.0 for smoother driving
+    
+    # Update these based on your physical robot dimensions (meters)
+    wheel_separation: 0.30 
+    wheel_radius: 0.05
+
+    # Odometry settings
+    publish_rate: 50.0
+    odom_frame_id: odom
+    base_frame_id: base_footprint
+    enable_odom_tf: true #This is vital for the robot to move in rviz
+    
+    # Use velocity commands from Nav2
+    command_interfaces: ["velocity"]
+    state_interfaces: ["position", "velocity"]

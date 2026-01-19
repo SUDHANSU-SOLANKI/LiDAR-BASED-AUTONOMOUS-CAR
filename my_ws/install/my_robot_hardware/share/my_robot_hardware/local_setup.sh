@@ -1,0 +1,1 @@
+/home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/build/my_robot_hardware/ament_cmake_environment_hooks/local_setup.sh

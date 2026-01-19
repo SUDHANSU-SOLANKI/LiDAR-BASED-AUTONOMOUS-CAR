@@ -9,6 +9,7 @@
 /home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/install/my_robot_description/share/my_robot_description//urdf/my_robot.urdf
 /home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/install/my_robot_description/share/my_robot_description//urdf/my_robot_improved.urdf.xacro
 /home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/install/my_robot_description/share/my_robot_description//urdf/my_robot_main.urdf.xacro
+/home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/install/my_robot_description/share/my_robot_description//urdf/ros2_control.xacro
 /home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/install/my_robot_description/share/my_robot_description//urdf/standalone_arm.urdf.xacro
 /home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/install/my_robot_description/share/my_robot_description//launch/display.launch.py
 /home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/install/my_robot_description/share/my_robot_description//launch/display.launch.xml

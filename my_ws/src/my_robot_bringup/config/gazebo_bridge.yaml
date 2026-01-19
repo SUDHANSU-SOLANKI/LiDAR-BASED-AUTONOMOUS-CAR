@@ -47,30 +47,30 @@
   gz_type_name: "gz.msgs.LaserScan"
   direction: GZ_TO_ROS
 
-# - ros_topic_name: "/scan"
-#   gz_topic_name: "/world/empty_world/model/my_robot/link/lidar_link/sensor/lidar_sensor/scan"
-#   ros_type_name: "sensor_msgs/msg/LaserScan"
-#   gz_type_name: "gz.msgs.LaserScan"
-#   direction: GZ_TO_ROS
+# # - ros_topic_name: "/scan"
+# #   gz_topic_name: "/world/empty_world/model/my_robot/link/lidar_link/sensor/lidar_sensor/scan"
+# #   ros_type_name: "sensor_msgs/msg/LaserScan"
+# #   gz_type_name: "gz.msgs.LaserScan"
+# #   direction: GZ_TO_ROS
 
 
-# this is self written --> many mistake
-# - ros_topic_name: "/lidar/points"
-#   gz_topic_name: "/lidar/points"
-#   ros_type_name: "sensor_msgs/msg/PointCloud2"
-#   gz_type_name: "gz.msgs.PointCloudPacked"
-#   direction: GZ_TO_ROS
+# # this is self written --> many mistake
+# # - ros_topic_name: "/lidar/points"
+# #   gz_topic_name: "/lidar/points"
+# #   ros_type_name: "sensor_msgs/msg/PointCloud2"
+# #   gz_type_name: "gz.msgs.PointCloudPacked"
+# #   direction: GZ_TO_ROS
 
 
-# ## This are bridges of robotic arm  
-# - ros_topic_name: "/joint0/cmd_pos"   ## if does not exist just name if
-#   gz_topic_name: "/model/my_robot/joint/base_forearm_joint/0/cmd_pos"
-#   ros_type_name: "std_msgs/msg/Float64"
-#   gz_type_name: "gz.msgs.Double"
-#   direction: ROS_TO_GZ 
+# # ## This are bridges of robotic arm  
+# # - ros_topic_name: "/joint0/cmd_pos"   ## if does not exist just name if
+# #   gz_topic_name: "/model/my_robot/joint/base_forearm_joint/0/cmd_pos"
+# #   ros_type_name: "std_msgs/msg/Float64"
+# #   gz_type_name: "gz.msgs.Double"
+# #   direction: ROS_TO_GZ 
 
-# - ros_topic_name: "/joint1/cmd_pos"   ## if does not exist just name if
-#   gz_topic_name: "/model/my_robot/joint/forearm_hand_joint/0/cmd_pos"
-#   ros_type_name: "std_msgs/msg/Float64"
-#   gz_type_name: "gz.msgs.Double"
-#   direction: ROS_TO_GZ 
+# # - ros_topic_name: "/joint1/cmd_pos"   ## if does not exist just name if
+# #   gz_topic_name: "/model/my_robot/joint/forearm_hand_joint/0/cmd_pos"
+# #   ros_type_name: "std_msgs/msg/Float64"
+# #   gz_type_name: "gz.msgs.Double"
+# #   direction: ROS_TO_GZ 

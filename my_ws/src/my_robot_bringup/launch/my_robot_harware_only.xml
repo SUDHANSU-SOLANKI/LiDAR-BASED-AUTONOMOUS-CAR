@@ -1,0 +1,64 @@
+<launch>
+  <!-- ===================== -->
+  <!-- Arguments -->
+  <!-- ===================== -->
+  <arg name="use_sim_time" default="false"
+       description="Hardware uses system clock"/>
+
+  <!-- ===================== -->
+  <!-- Paths -->
+  <!-- ===================== -->
+  <let name="pkg_description" value="$(find-pkg-share my_robot_description)"/>
+  <let name="pkg_bringup" value="$(find-pkg-share my_robot_bringup)"/>
+
+  <let name="urdf_file"
+       value="$(var pkg_description)/urdf/my_robot_main.urdf.xacro"/>
+
+  <let name="controller_config"
+       value="$(var pkg_bringup)/config/my_controller.yaml"/>
+
+  <let name="rviz_config"
+       value="$(var pkg_description)/rviz/rviz_config.rviz"/>
+
+  <!-- ===================== -->
+  <!-- Robot State Publisher -->
+  <!-- ===================== -->
+  <node pkg="robot_state_publisher" exec="robot_state_publisher">
+    <param name="robot_description"
+           value="$(command 'xacro $(var urdf_file)')"/>
+    <param name="use_sim_time" value="false"/>
+  </node>
+
+  <!-- ===================== -->
+  <!-- ros2_control (HARDWARE) -->
+  <!-- ===================== -->
+  <node pkg="controller_manager"
+        exec="ros2_control_node"
+        output="screen">
+    <param name="robot_description"
+           value="$(command 'xacro $(var urdf_file)')"/>
+    <param from="$(var controller_config)"/>
+    <param name="use_sim_time" value="false"/>
+  </node>
+
+  <!-- ===================== -->
+  <!-- Controllers -->
+  <!-- ===================== -->
+  <node pkg="controller_manager"
+        exec="spawner"
+        args="joint_state_broadcaster"/>
+
+  <node pkg="controller_manager"
+        exec="spawner"
+        args="diff_drive_controller"/>
+
+  <!-- ===================== -->
+  <!-- RViz -->
+  <!-- ===================== -->
+  <node pkg="rviz2"
+        exec="rviz2"
+        args="-d $(var rviz_config)">
+    <param name="use_sim_time" value="false"/>
+  </node>
+
+</launch>

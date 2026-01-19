@@ -1,8 +1,12 @@
 /home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/install/my_robot_bringup/share/my_robot_bringup//launch/my_robot_gazebo.launch.py
 /home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/install/my_robot_bringup/share/my_robot_bringup//launch/my_robot_gazebo.launch.xml
+/home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/install/my_robot_bringup/share/my_robot_bringup//launch/my_robot_harware_only.xml
+/home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/install/my_robot_bringup/share/my_robot_bringup//launch/my_robot_sim_and_hardware.py
+/home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/install/my_robot_bringup/share/my_robot_bringup//launch/my_robot_sim_and_hardware.xml
 /home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/install/my_robot_bringup/share/my_robot_bringup//launch/twist_mux_launch.py
 /home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/install/my_robot_bringup/share/my_robot_bringup//config/gazebo_bridge.yaml
 /home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/install/my_robot_bringup/share/my_robot_bringup//config/mapper_params_online_async.yaml
+/home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/install/my_robot_bringup/share/my_robot_bringup//config/my_controller.yaml
 /home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/install/my_robot_bringup/share/my_robot_bringup//config/twist_mux.yaml
 /home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/install/my_robot_bringup/share/my_robot_bringup//worlds/og_2.sdf
 /home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/install/my_robot_bringup/share/my_robot_bringup//worlds/og_world.sdf
