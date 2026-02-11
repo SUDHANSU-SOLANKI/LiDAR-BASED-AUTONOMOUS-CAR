@@ -26,7 +26,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: LaserScan
+    SyncSource: ""
 Visualization Manager:
   Class: ""
   Displays:
@@ -125,8 +125,6 @@ Visualization Manager:
           Value: true
         lidar_link:
           Value: true
-        my_robot/base_footprint/lidar_link:
-          Value: true
         odom:
           Value: true
         right_wheel:
@@ -137,21 +135,19 @@ Visualization Manager:
       Show Axes: true
       Show Names: false
       Tree:
-        base_footprint:
-          base_link:
-            camera_link:
-              {}
-            castor_wheel:
-              {}
-            left_wheel:
-              {}
-            lidar_link:
-              my_robot/base_footprint/lidar_link:
-                {}
-            right_wheel:
-              {}
         odom:
-          {}
+          base_footprint:
+            base_link:
+              camera_link:
+                {}
+              castor_wheel:
+                {}
+              left_wheel:
+                {}
+              lidar_link:
+                {}
+              right_wheel:
+                {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -191,7 +187,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: base_footprint
+    Fixed Frame: odom
     Frame Rate: 30
   Name: root
   Tools:
@@ -234,7 +230,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 6.3972296714782715
+      Distance: 8.98764705657959
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -249,10 +245,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.33979758620262146
+      Pitch: 1.5697963237762451
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 2.933560609817505
+      Yaw: 3.13356351852417
     Saved: ~
 Window Geometry:
   Displays:

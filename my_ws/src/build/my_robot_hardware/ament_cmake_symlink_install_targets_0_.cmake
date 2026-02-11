@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/src/build/my_robot_hardware/libmy_robot_hardware.so" "TARGETS" "my_robot_hardware" "DESTINATION" "lib/my_robot_hardware")

@@ -1,0 +1,1 @@
+/home/sudhansu/Desktop/ros2_intermediate_cource/my_ws/src/rplidar_ros/launch/rplidar_s2_launch.py
